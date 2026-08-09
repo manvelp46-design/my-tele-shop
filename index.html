@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shope</title>
+    <style>
+        /* Базовые простые стили */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222222; /* Просто темный фон */
+            color: white; /* Белый цвет текста */
+            text-align: center; /* Центрируем весь текст */
+            padding-top: 50px;
+        }
+
+        .container, #form {
+            max-width: 300px;
+            margin: 0 auto; /* Центрируем блок на экране */
+            padding: 20px;
+        }
+
+        h1 {
+            color: #3498db; /* Делаем заголовок синим */
+            font-size: 28px;
+        }
+
+        img {
+            width: 100%; /* Картинка подстроится под размер экрана */
+            border-radius: 10px; /* Скругляем углы у картинки */
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #cccccc; /* Серый цвет для описания */
+        }
+
+        button {
+            background-color: #2ecc71; /* Зеленая кнопка */
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px; /* Скругляем углы у кнопки */
+            width: 100%; /* Кнопка будет на всю ширину блока */
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Красивые инпуты */
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #444444;
+            background-color: #333333;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main" class="container">
+        <h1>Welcome to Shope</h1>
+        <img src="bel.jpg" alt="Shop Image">
+        <p>Your one-stop shop for all your needs!</p>
+        <button id="buy">Shop Now</button>
+    </div>
+
+    <!-- Форма теперь не кликабельная целиком -->
+    <form id="form" method="POST" style="display:none;" onsubmit="return false;">
+        <h2>Оформление заказа</h2>
+        <input type="text" placeholder="Name" id="user_name">
+        <input type="text" placeholder="Email" id="user_email">
+        <input type="text" placeholder="Telephone" id="user_phone">
+        <!-- Добавили отдельный ID для кнопки заказа -->
+        <button id="order_send_btn" type="button">Оформить заказ</button>
+    </form>
+
+    <script src="https://telegram.org"></script>
+    <script>
+        let tg = window.Telegram.WebApp;
+        let buy = document.getElementById("buy");
+        let mainBlock = document.getElementById("main");
+        let orderForm = document.getElementById("form");
+        let orderSendBtn = document.getElementById("order_send_btn");
+
+        // Переход на экран формы
+        buy.addEventListener("click", () => {
+            mainBlock.style.display = "none";
+            orderForm.style.display = "block";
+            
+            // Безопасно вытаскиваем имя из телеграма
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                let name = tg.initDataUnsafe.user.first_name || "";
+                let lname = tg.initDataUnsafe.user.last_name || "";
+                document.getElementById("user_name").value = name + " " + lname;
+            }
+        });
+
+        // ИСПРАВЛЕНО: Теперь нажимаем строго на кнопку «Оформить заказ»
+        orderSendBtn.addEventListener("click", () => {
+            tg.close(); // Закрываем Web App
+        });
+    </script>
+</body>
+</html>
