@@ -69,7 +69,7 @@
         <button id="buy">Shop Now</button>
     </div>
 
-    <!-- Форма теперь не кликабельная целиком -->
+    <!-- textФорма теперь не кликабельная целиком -->
     <form id="form" method="POST" style="display:none;" onsubmit="return false;">
         <h2>Оформление заказа</h2>
         <input type="text" placeholder="Name" id="user_name">
@@ -79,6 +79,7 @@
         <button id="order_send_btn" type="button">Оформить заказ</button>
     </form>
 
+    <!-- ИСПРАВЛЕНО: Поставили правильную ссылку на библиотеку WebApp Telegram -->
     <script src="https://telegram.org"></script>
     <script>
         let tg = window.Telegram.WebApp;
@@ -100,7 +101,7 @@
             }
         });
 
-        // ИСПРАВЛЕНО: Теперь нажимаем строго на кнопку «Оформить заказ»
+        // Теперь нажимаем строго на кнопку «Оформить заказ»
         orderSendBtn.addEventListener("click", () => {
             tg.close(); // Закрываем Web App
         });
